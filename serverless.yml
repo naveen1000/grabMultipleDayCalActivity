@@ -1,0 +1,31 @@
+service: grabMultipleDayCalActivity
+
+frameworkVersion: '3'
+
+
+provider:
+  name: aws
+  runtime: python3.9
+  memorySize: 128
+  timeout: 15 #Seconds  
+  layers:
+    - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-p39-numpy:8
+    - arn:aws:lambda:us-east-1:770693421928:layer:Klayers-p39-matplotlib:1
+    - arn:aws:lambda:us-east-1:342115176826:layer:telegram_bot_mod:1
+    - arn:aws:lambda:us-east-1:342115176826:layer:mysql-connector-python-mod:1
+
+functions:
+  grabMultipleDayCalActivity:
+    handler: lambda_function.lambda_handler
+    name: grabMultipleDayCalActivity
+    description: Grab Multiple Day Calendar Activity data From RDS DB
+    ephemeralStorageSize: 512
+    url:
+        authorizer: 'none'   
+    events:
+      # Invoke Lambda function every day at 10:47PM
+      - schedule: cron(17 17 * * ? *)
+    #package:
+    #  patterns:
+    #    - '!src/**'
+    #    - src/function/handler.js
