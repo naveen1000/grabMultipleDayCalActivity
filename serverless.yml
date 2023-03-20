@@ -25,7 +25,7 @@ functions:
     events:
       # Invoke Lambda function every day at 10:47PM
       - schedule: cron(17 17 * * ? *)
-    #package:
-    #  patterns:
-    #    - '!src/**'
-    #    - src/function/handler.js
+    package:
+      patterns:
+        - '!package.josn'
+    #    - ''!package.josn''
